@@ -1,0 +1,4 @@
+tensorflow==2.16.1  # Adjust the version depending on your specific compatibility needs
+numpy==1.26.4
+matplotlib >= 3.8.4
+flask >= 3.0.3
