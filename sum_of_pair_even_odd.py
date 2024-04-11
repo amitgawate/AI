@@ -7,7 +7,7 @@ from PlotLearning import PlotLearning
 # Generate training data
 # np.random.seed(12)
 # Define the length of your binary string and number of samples
-binary_length = 8
+binary_length = 16
 num_samples = 1000
 num_samples_test = 200
 
@@ -33,7 +33,7 @@ y_train = np.array(y_train)
 
 # Generate testing data 
 # Generate x_test data
-x_test = np.random.randint(0, 2, size=(num_samples_test, 8))
+x_test = np.random.randint(0, 2, size=(num_samples_test, binary_length))
 
 
 # Generate y_test data
@@ -82,13 +82,15 @@ history_1 = model.fit(x_train, y_train, epochs=100, validation_data=(x_test, y_t
 loss, accuracy = model.evaluate(x_test, y_test)
 print(f'Accuracy: {accuracy * 100:.2f}%')
           
-# # Make a prediction 
+# Make a prediction 
 num_samples_pred = 5
 x_pred = np.random.randint(0, 2, size=(num_samples_pred, binary_length))
 
 # Generate y_test data
 y_pred_actual = []
 y = []
+
+model.save('oddEvenSum.h5')  # Saves the model in HDF5 format
 
 for i in range(num_samples_pred):
     # Split the list into two equal halves
@@ -97,6 +99,11 @@ for i in range(num_samples_pred):
     # Convert binary to decimal
     num1 = int(''.join([str(int(x)) for x in split_lists[0]]), 2)
     num2 = int(''.join([str(int(x)) for x in split_lists[1]]), 2)
+
+    print('num1 =')
+    print(num1)
+    print('num2 =')
+    print(num2)
 
     # Calculate the sum and take modulo 2
     y_pred_actual.append((num1 + num2) % 2)
@@ -107,6 +114,7 @@ y_pred_actual = np.array(y_pred_actual)
 y_pred = model.predict(x_pred)
 thresholded_data = (y_pred > 0.5).astype(int)
 
+print(x_pred)
 print (y)
 print (y_pred.T)
 print (thresholded_data.T)
